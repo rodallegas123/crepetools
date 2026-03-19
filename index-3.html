@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register Closing — P.S. I Crepe You</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: #ff4d8d;
+      font-family: 'DM Sans', sans-serif;
+      color: #3d0020;
+    }
+
+    .rc-header {
+      background: linear-gradient(135deg, #ff1a6e 0%, #ff5fa0 50%, #ff1a6e 100%);
+      padding: 36px 24px 28px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .rc-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,0.05) 20px, rgba(255,255,255,0.05) 40px);
+    }
+    .rc-header-eyebrow {
+      font-size: 10px;
+      letter-spacing: 5px;
+      color: #ffe0ee;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .rc-header-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 30px;
+      color: #fff;
+      font-weight: 700;
+      position: relative;
+      letter-spacing: 0.5px;
+    }
+    .rc-header-sub {
+      font-size: 11px;
+      color: #ffe0ee;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 6px;
+      position: relative;
+    }
+
+    .rc-body {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 28px 18px 60px;
+    }
+
+    .rc-card {
+      background: #fff0f5;
+      border: 1px solid #ffb3d0;
+      border-radius: 18px;
+      padding: 30px 26px;
+      box-shadow: 0 8px 40px rgba(255,20,100,0.2);
+    }
+
+    .rc-label {
+      display: block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #d4336e;
+      margin-bottom: 8px;
+      margin-top: 18px;
+    }
+    .rc-label:first-child { margin-top: 0; }
+
+    .rc-input {
+      width: 100%;
+      background: #fff;
+      border: 1.5px solid #ffb3d0;
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 16px;
+      font-family: 'DM Sans', sans-serif;
+      color: #3d0020;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .rc-input:focus { border-color: #ff1a6e; }
+    .rc-input::placeholder { color: #f0a0c0; }
+
+    .rc-hint {
+      font-size: 11px;
+      color: #f080a8;
+      margin-top: 5px;
+      margin-bottom: 4px;
+      padding-left: 2px;
+      font-style: italic;
+    }
+
+    .rc-dollar-wrap { position: relative; }
+    .rc-dollar-sign {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #f0a0c0;
+      font-size: 16px;
+      pointer-events: none;
+    }
+    .rc-dollar-wrap .rc-input { padding-left: 28px; }
+
+    .rc-diff-pill {
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 18px;
+      margin-bottom: 4px;
+      border: 1px solid transparent;
+    }
+    .rc-diff-label { font-size: 13px; font-weight: 500; }
+    .rc-diff-amount {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 600;
+    }
+
+    textarea.rc-input { resize: none; }
+
+    .rc-submit-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #ff1a6e, #e0005a);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 18px 0;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 20px;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    .rc-submit-btn:disabled {
+      background: #ffcce0;
+      color: #f090b8;
+      cursor: not-allowed;
+    }
+    .rc-submit-btn:not(:disabled):active { transform: scale(0.99); }
+
+    /* Success */
+    .rc-success-icon { font-size: 52px; text-align: center; margin-bottom: 14px; }
+    .rc-success-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      color: #3d0020;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+    .rc-success-sub {
+      text-align: center;
+      color: #d4336e;
+      font-size: 13px;
+      margin-bottom: 28px;
+    }
+    .rc-summary {
+      background: #ffe0ee;
+      border: 1px solid #ffb3d0;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .rc-summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 9px 0;
+      border-bottom: 1px solid #ffcce0;
+      font-size: 14px;
+    }
+    .rc-summary-row:last-child { border-bottom: none; }
+    .rc-summary-key { color: #c0336a; }
+    .rc-summary-val { color: #3d0020; font-weight: 500; }
+
+    .rc-reset-btn {
+      background: #ffe0ee;
+      color: #e0005a;
+      border: 1px solid #ffb3d0;
+      border-radius: 12px;
+      padding: 14px 36px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      display: block;
+      margin: 0 auto;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: background 0.2s;
+    }
+    .rc-reset-btn:hover { background: #ffd0e8; }
+
+    .rc-log-toggle {
+      width: 100%;
+      background: transparent;
+      border: 1.5px solid #ff80b3;
+      color: #fff;
+      border-radius: 12px;
+      padding: 14px 0;
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      margin-top: 18px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .rc-log-toggle:hover { background: rgba(255,255,255,0.15); border-color: #fff; }
+
+    .rc-log-entry {
+      background: #fff0f5;
+      border: 1px solid #ffb3d0;
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-top: 10px;
+    }
+    .rc-log-top { display: flex; justify-content: space-between; margin-bottom: 10px; }
+    .rc-log-name { font-weight: 600; font-size: 15px; color: #3d0020; }
+    .rc-log-date { color: #f080a8; font-size: 12px; align-self: center; }
+    .rc-log-bottom { display: flex; justify-content: space-between; font-size: 13px; gap: 8px; }
+    .rc-log-stat { color: #c0336a; }
+    .rc-log-notes {
+      font-size: 12px;
+      color: #f080a8;
+      font-style: italic;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #ffcce0;
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(0.3) sepia(1) saturate(3) hue-rotate(300deg);
+      opacity: 0.7;
+    }
+
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+  <div class="rc-header">
+    <div class="rc-header-eyebrow">P.S. I Crepe You</div>
+    <div class="rc-header-title">Register Closing</div>
+    <div class="rc-header-sub">End of Night Report</div>
+  </div>
+
+  <div class="rc-body">
+
+    <!-- FORM -->
+    <div class="rc-card" id="form-card">
+      <label class="rc-label">Date</label>
+      <input class="rc-input" type="date" id="inp-date" />
+
+      <label class="rc-label">Your First Name</label>
+      <input class="rc-input" type="text" id="inp-employee" placeholder="First name" />
+
+      <label class="rc-label">Snackpass Cash Total</label>
+      <div class="rc-dollar-wrap">
+        <span class="rc-dollar-sign">$</span>
+        <input class="rc-input" type="number" id="inp-pos" placeholder="0.00" />
+      </div>
+      <div class="rc-hint">Total drawer amount shown in Snackpass → Data → Cash</div>
+
+      <label class="rc-label">Total Cash in Register</label>
+      <div class="rc-dollar-wrap">
+        <span class="rc-dollar-sign">$</span>
+        <input class="rc-input" type="number" id="inp-cash" placeholder="0.00" />
+      </div>
+      <div class="rc-hint">Count ALL bills and coins in the drawer</div>
+
+      <div id="diff-pill" class="rc-diff-pill hidden">
+        <span class="rc-diff-label" id="diff-label"></span>
+        <span class="rc-diff-amount" id="diff-amount"></span>
+      </div>
+
+      <label class="rc-label">Notes / Discrepancies</label>
+      <textarea class="rc-input" id="inp-notes" placeholder="Any issues or notes for the manager..." rows="3"></textarea>
+
+      <button class="rc-submit-btn" id="submit-btn" disabled onclick="handleSubmit()">
+        Submit Closing Report
+      </button>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="rc-card hidden" id="success-card">
+      <div class="rc-success-icon">🎉</div>
+      <div class="rc-success-title">Register Closed!</div>
+      <div class="rc-success-sub" id="success-sub">Report saved to Google Sheets. Have a great night!</div>
+      <div class="rc-summary" id="summary-rows"></div>
+      <button class="rc-reset-btn" onclick="handleReset()">Start New Closing</button>
+    </div>
+
+    <button class="rc-log-toggle" id="log-toggle" onclick="toggleLog()">
+      View Closing Log (0 entries)
+    </button>
+
+    <div id="log-list" class="hidden"></div>
+
+  </div>
+
+  <script>
+    const SHEET_URL = "https://script.google.com/macros/s/AKfycbx2274UBo_mDIsRBER39vhm-ToAdG85-O0jn4otR7__Dk7WBjoEvLoCqd_xmW-jxlGw/exec"
+
+    const log = []
+    let showLog = false
+
+    // Set today's date
+    document.getElementById('inp-date').value = new Date().toISOString().split('T')[0]
+
+    // Live diff + button enable
+    function onInput() {
+      const pos = parseFloat(document.getElementById('inp-pos').value) || 0
+      const cash = parseFloat(document.getElementById('inp-cash').value) || 0
+      const employee = document.getElementById('inp-employee').value.trim()
+      const posVal = document.getElementById('inp-pos').value
+      const cashVal = document.getElementById('inp-cash').value
+
+      const diff = (cash - pos)
+      const pill = document.getElementById('diff-pill')
+
+      if (posVal && cashVal) {
+        pill.classList.remove('hidden')
+        const isBalanced = diff === 0
+        const isOver = diff > 0
+        const color = isBalanced ? '#1a7a45' : isOver ? '#1a5fa8' : '#c0392b'
+        const bg = isBalanced ? '#d4f5e4' : isOver ? '#d4e8ff' : '#fde8e8'
+        const border = isBalanced ? '#7addb0' : isOver ? '#7ab8f5' : '#f5a0a0'
+        const label = isBalanced ? '✓ Balanced' : isOver ? '↑ Over' : '↓ Short'
+        pill.style.background = bg
+        pill.style.borderColor = border
+        document.getElementById('diff-label').style.color = color
+        document.getElementById('diff-label').textContent = label
+        document.getElementById('diff-amount').style.color = color
+        document.getElementById('diff-amount').textContent = (diff >= 0 ? '+' : '') + diff.toFixed(2)
+      } else {
+        pill.classList.add('hidden')
+      }
+
+      document.getElementById('submit-btn').disabled = !(employee && posVal && cashVal)
+    }
+
+    document.getElementById('inp-employee').addEventListener('input', onInput)
+    document.getElementById('inp-pos').addEventListener('input', onInput)
+    document.getElementById('inp-cash').addEventListener('input', onInput)
+
+    async function handleSubmit() {
+      const date = document.getElementById('inp-date').value
+      const employee = document.getElementById('inp-employee').value.trim()
+      const posExpected = document.getElementById('inp-pos').value
+      const cashCounted = document.getElementById('inp-cash').value
+      const notes = document.getElementById('inp-notes').value.trim()
+      const pos = parseFloat(posExpected) || 0
+      const cash = parseFloat(cashCounted) || 0
+      const diff = (cash - pos).toFixed(2)
+      const timestamp = new Date().toLocaleString()
+
+      const entry = { date, employee, posExpected, cashCounted, difference: diff, notes, timestamp }
+
+      const btn = document.getElementById('submit-btn')
+      btn.disabled = true
+      btn.textContent = 'Saving...'
+
+      try {
+        await fetch(SHEET_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(entry)
+        })
+      } catch(e) {}
+
+      log.unshift(entry)
+      showSuccess(entry)
+      updateLogToggle()
+      if (showLog) renderLog()
+    }
+
+    function showSuccess(entry) {
+      document.getElementById('form-card').classList.add('hidden')
+      const card = document.getElementById('success-card')
+      card.classList.remove('hidden')
+
+      const diff = parseFloat(entry.difference)
+      const isBalanced = diff === 0
+      const isOver = diff > 0
+      const color = isBalanced ? '#1a7a45' : isOver ? '#1a5fa8' : '#c0392b'
+
+      const rows = [
+        ['Date', entry.date],
+        ['Closed by', entry.employee],
+        ['Snackpass total', '$' + parseFloat(entry.posExpected).toFixed(2)],
+        ['Cash counted', '$' + parseFloat(entry.cashCounted).toFixed(2)],
+      ]
+
+      let html = rows.map(([k, v]) => `
+        <div class="rc-summary-row">
+          <span class="rc-summary-key">${k}</span>
+          <span class="rc-summary-val">${v}</span>
+        </div>`).join('')
+
+      html += `<div class="rc-summary-row">
+        <span class="rc-summary-key">Difference</span>
+        <span style="color:${color};font-weight:600">${diff >= 0 ? '+' : ''}${entry.difference}</span>
+      </div>`
+
+      if (entry.notes) {
+        html += `<div style="padding-top:10px;font-size:12px;color:#5a3040;font-style:italic">${entry.notes}</div>`
+      }
+
+      document.getElementById('summary-rows').innerHTML = html
+    }
+
+    function handleReset() {
+      document.getElementById('success-card').classList.add('hidden')
+      document.getElementById('form-card').classList.remove('hidden')
+      document.getElementById('inp-date').value = new Date().toISOString().split('T')[0]
+      document.getElementById('inp-employee').value = ''
+      document.getElementById('inp-pos').value = ''
+      document.getElementById('inp-cash').value = ''
+      document.getElementById('inp-notes').value = ''
+      document.getElementById('diff-pill').classList.add('hidden')
+      document.getElementById('submit-btn').disabled = true
+      document.getElementById('submit-btn').textContent = 'Submit Closing Report'
+    }
+
+    function toggleLog() {
+      showLog = !showLog
+      document.getElementById('log-list').classList.toggle('hidden', !showLog)
+      if (showLog) renderLog()
+      updateLogToggle()
+    }
+
+    function updateLogToggle() {
+      const count = log.length
+      const word = count === 1 ? 'entry' : 'entries'
+      document.getElementById('log-toggle').textContent =
+        (showLog ? 'Hide' : 'View') + ` Closing Log (${count} ${word})`
+    }
+
+    function renderLog() {
+      const container = document.getElementById('log-list')
+      if (log.length === 0) {
+        container.innerHTML = '<div style="text-align:center;color:#ffd0e8;padding:28px;font-size:13px">No closings recorded yet.</div>'
+        return
+      }
+      container.innerHTML = log.map(entry => {
+        const d = parseFloat(entry.difference)
+        const dc = d === 0 ? '#1a7a45' : d > 0 ? '#1a5fa8' : '#c0392b'
+        return `
+          <div class="rc-log-entry">
+            <div class="rc-log-top">
+              <span class="rc-log-name">${entry.employee}</span>
+              <span class="rc-log-date">${entry.date}</span>
+            </div>
+            <div class="rc-log-bottom">
+              <span class="rc-log-stat">Snackpass: $${parseFloat(entry.posExpected).toFixed(2)}</span>
+              <span class="rc-log-stat">Counted: $${parseFloat(entry.cashCounted).toFixed(2)}</span>
+              <span style="color:${dc};font-weight:600">${d >= 0 ? '+' : ''}${entry.difference}</span>
+            </div>
+            ${entry.notes ? `<div class="rc-log-notes">${entry.notes}</div>` : ''}
+          </div>`
+      }).join('')
+    }
+  </script>
+
+</body>
+</html>
